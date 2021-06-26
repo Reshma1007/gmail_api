@@ -7,7 +7,7 @@ from google.oauth2.credentials import Credentials
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
-def get_services():
+def get_service():
 
     creds = None
     if os.path.exists('token.json'):
@@ -30,7 +30,11 @@ def get_services():
 def get_email_all():
     service = get_gmail_service()
     results = service.users().messages().list(userId= 'me' ,maxResults=5).execute()
-    reutrn results.get('messages',[])
+    messages = results.get('messages', [])
+    for message in messages:
+        msg = service.users().messages().get(userId='me', id=message['id']).execute()
+        print(msg['snippet'])
+        print(msg['id'])
     
    
 
