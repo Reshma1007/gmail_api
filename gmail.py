@@ -1,7 +1,9 @@
 from __future__ import print_function
+import base64
+import email
 import os.path
 import sqlalchemy as db
-from sqlalchemy import Table, Column, Integer, String
+from sqlalchemy import Table, Column, Integer, String, VARCHAR, engine
 from requests import Session
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -15,8 +17,10 @@ meta = db.MetaData()
 mail = Table(
    'mail', meta,
    Column('id', Integer, primary_key=True),
-   Column('description', String),
-   Column('thID', String),
+   Column('mail_to', String),
+   Column('mail_from', VARCHAR),
+   Column('subject' , String),
+   Column('date', String)
 )
 session = Session()
 meta.create_all(engine)
@@ -42,21 +46,23 @@ def get_gmail_service():
 
 def get_email_list():
     service = get_gmail_service()
-    results=service.users().messages().list(userId='me',maxResults=5).execute()
+    results = service.users().messages().list(userId='me',maxResults=5).execute()
     return results.get('messages',[])
 
-def get_email_content(message_id):
-    service=get_gmail_service()
-    results = service.users().messages().get(userId='me', id=message_id).execute()
-    data = {'snippet': results['snippet'],'threadId': results['threadId']}
+def get_email_service(msg_id):
+    service = get_gmail_service()
+    results = service.users().messages().get(userId='me', id=msg_id, format='raw').execute()
+    msg_str = base64.urlsafe_b64decode(results['raw'])
+    min_msg = email.message_from_bytes(msg_str)
+    data = {'to': min_msg['To'], 'from': min_msg['From'], 'date': min_msg['Date'], 'subject': min_msg['Subject']}
     return data
 
 def store():
     engine = db.create_engine('sqlite:///gmail.db', echo=True)
     conn = engine.connect()
-    result = get_email_content('17a50ab54502b678')
-    conn.execute('INSERT INTO mail(description,thId) VALUES(:description,:thId)',
-                 (result['snippet']), result['threadId'])
+    results = get_email_service('17a50e49f6e74e09')
+    conn.execute('INSERT INTO mail(mail_from,mail_to,subject,date) VALUES(:mail_from,:mail_to,:subject,:date)',
+                 results['from'], results['to'], results['subject'], results ['date'])
     print("entered successfully")
     conn.close()
 
