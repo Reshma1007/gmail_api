@@ -1,0 +1,98 @@
+{
+  "1":{
+  "predicate" : ["ALL"],
+    "content": [
+      { "name": "from",
+        "value": [
+          "contains",
+          "hackerrankmail.com"
+        ]
+      },
+      { "name": "to",
+        "value": [
+          "contains",
+          "yreshreshma@gmail.com"
+        ]
+      },
+      { "name": "subject",
+        "value": [
+          "contains",
+          "DAY 23: Rooting for You!"
+        ]
+      },
+      { "name": "date",
+        "value": [
+          "contains",
+          "Mon, 28 Jun 2021"
+        ]
+      }
+    ],
+    "action": {
+      "addLabelIds": ["SENT"],
+      "removeLabelIds": []
+    }
+  },
+  "2":{
+    "predicate" : ["ANY"],
+    "content": [
+      {
+        "name": "from",
+        "value": [
+          "contains",
+          "hackerrankmail.com"
+        ]
+      },
+      {
+        "name": "to",
+        "value": [
+          "contains",
+          "yresreshma@gmail.com" ]
+      },
+      {
+        "name": "subject",
+        "value": [
+          "contains",
+          "DAY 23: Rooting for You!"
+        ]
+      }
+    ],
+    "action": {
+      "addLabelIds": ["SENT"],
+      "removeLabelIds": []
+    }
+  },
+  "3":{
+    "predicate" : ["ANY"],
+    "content": [
+      {
+        "name": "from",
+        "value":
+        [ "contains",
+          "17a50e49f6e74e09"
+        ]
+      },
+      { "name": "to",
+        "value": [
+          "contains",
+          "yreshreshma@gmail.com"
+        ]
+      },
+      { "name": "subject",
+        "value": [
+          "contains",
+          "DAY 23: Rooting for You!"
+        ]
+      },
+      { "name": "date",
+        "value": [
+          "contains",
+          "Mon, 28 Jun 2021"
+        ]
+      }
+    ],
+    "action": {
+      "addLabelIds": ["RECEIVED"],
+      "removeLabelIds": []
+    }
+  }
+}
