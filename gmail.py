@@ -65,7 +65,19 @@ def store():
                  results['from'], results['to'], results['subject'], results ['date'])
     print("entered successfully")
     conn.close()
+   
+def rules():
+    engine = db.create_engine('sqlite:///gmail.db', echo=True)
+    conn = engine.connect()
+    rules = json.load(open('rules.json'))
+    for rule in rules["1"]["content"]:
+        print(rule['name'], rule['value'])
+        query = "SELECT mail_from FROM mail WHERE " + "mail_" + rule["name"] + " LIKE '" + rule["value"][1] + "'"
+        results = conn.execute(query)
+        print(results)
+        service = get_gmail_service()
+        service.users().messages().modify(userId='me', id='17a50e49f6e74e09', body={'addLabelIds': ['STARRED']}).execute()
 
 
 if __name__ == '__main__':
-    store()
+    rules()
