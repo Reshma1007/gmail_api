@@ -93,7 +93,7 @@ def mark_as_read():
     for rule in rules["rule1"]["content"]:
         print(rule['name'], rule['value'])
         service = get_gmail_service()
-        service.users().messages().modify(userId='me', id='17a50e49f6e74e09',body={'removeLabelIds': ['UNREAD']}).execute()
+        service.users().messages().modify(userId='me', id='17a50e49f6e74e09',body={'removeLabelIds': ['READ']}).execute()
 
 def starred():
     engine = db.create_engine('sqlite:///gmail.db', echo=True)
