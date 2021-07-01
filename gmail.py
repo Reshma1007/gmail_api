@@ -62,7 +62,7 @@ def store():
     engine = db.create_engine('sqlite:///gmail.db', echo=True)
     conn = engine.connect()
     results = get_email_service('17a50e49f6e74e09')
-    conn.execute('INSERT INTO mail(mail_from,mail_to,subject,date) VALUES(:mail_from,:mail_to,:subject,:date)',
+    conn.execute('INSERT INTO mail(mail_from,mail_to,mail_subject,mail_date) VALUES(:mail_from,:mail_to,:mail_subject,:mail_date)',
                  results['from'], results['to'], results['subject'], results ['date'])
     print("entered successfully")
     conn.close()
