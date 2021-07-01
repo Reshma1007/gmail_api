@@ -112,7 +112,9 @@ def add_label():
     print(result)
 
 if __name__ == '__main__':
-    printlabels()
-    # store()
+      store()
     # mark_as_unread()
     # mark_as_read()
+    # starred()
+    # archive()
+    # add_label()
