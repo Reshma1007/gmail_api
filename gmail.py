@@ -45,18 +45,6 @@ def get_gmail_service():
     service = build('gmail', 'v1', credentials=creds)
     return service
 
-def printlabels():
-    service = get_gmail_service()
-    results = service.users().labels().list(userId='me').execute()
-    labels = results.get('labels', [])
-
-    if not labels:
-        print('No labels found.')
-    else:
-        print('Labels:')
-        for label in labels:
-            print(label['name'])
-
 def get_email_list():
     service = get_gmail_service()
     results = service.users().messages().list(userId='me',maxResults=5).execute()
