@@ -1,3 +1,9 @@
+use google cloud platform to get client id 
+>create a account in cloud plateform and create the project.
+>use credentials to get client id
+
+
+
 A standalone Python script that integrates with Gmail API and performs some rule based operations on emails.
 
 Task Details & Breakdown:
